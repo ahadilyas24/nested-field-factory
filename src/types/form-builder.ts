@@ -46,3 +46,15 @@ export type FormField = {
 export type FormData = {
   [key: string]: any;
 };
+
+// Added to fix the icon types
+export type LucideIconName = 
+  | 'Type' 
+  | 'List' 
+  | 'CircleDot' 
+  | 'Upload' 
+  | 'CheckSquare' 
+  | 'Globe' 
+  | 'Calendar' 
+  | 'Phone'
+  | 'Square';

@@ -46,6 +46,13 @@ const FieldPropertiesPanel: React.FC<FieldPropertiesPanelProps> = ({ className }
   
   const [field, setField] = useState<FormField>(activeField);
 
+  // Make sure field state is updated when active field changes
+  React.useEffect(() => {
+    if (activeField) {
+      setField(activeField);
+    }
+  }, [activeField]);
+
   const handleFieldChange = <K extends keyof FormField>(key: K, value: FormField[K]) => {
     setField(prev => ({ ...prev, [key]: value }));
   };
@@ -132,9 +139,14 @@ const FieldPropertiesPanel: React.FC<FieldPropertiesPanelProps> = ({ className }
   return (
     <div className={cn("bg-card border rounded-lg overflow-hidden", className)}>
       <div className="p-4 bg-primary/5 border-b">
-        <div className="flex items-center space-x-2">
-          <Settings2 className="h-4 w-4 text-primary" />
-          <h3 className="text-lg font-medium">Field Properties</h3>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <Settings2 className="h-4 w-4 text-primary" />
+            <h3 className="text-lg font-medium">Field Properties</h3>
+          </div>
+          <div className="text-sm text-muted-foreground">
+            {field.isSection ? 'Section' : field.type}
+          </div>
         </div>
       </div>
       

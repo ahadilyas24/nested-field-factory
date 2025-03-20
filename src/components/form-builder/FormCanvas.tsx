@@ -14,7 +14,7 @@ interface FormCanvasProps {
 }
 
 const FormCanvas: React.FC<FormCanvasProps> = ({ className }) => {
-  const { state, validateAllFields } = useFormBuilder();
+  const { state, validateAllFields, setActiveField } = useFormBuilder();
   const rootFields = state.fields.filter(field => !field.parentId);
   
   const handleSubmit = (e: React.FormEvent) => {
@@ -33,6 +33,14 @@ const FormCanvas: React.FC<FormCanvasProps> = ({ className }) => {
     }
   };
   
+  // Clear active selection when clicking on the canvas background
+  const handleCanvasClick = (e: React.MouseEvent) => {
+    // Only clear if clicking directly on the canvas, not on a field
+    if (e.currentTarget === e.target) {
+      setActiveField(null);
+    }
+  };
+  
   const isEmpty = rootFields.length === 0;
   
   return (
@@ -44,7 +52,7 @@ const FormCanvas: React.FC<FormCanvasProps> = ({ className }) => {
         </CardDescription>
       </CardHeader>
       
-      <CardContent>
+      <CardContent onClick={handleCanvasClick}>
         {isEmpty ? (
           <div className="text-center py-8 border-2 border-dashed border-border rounded-lg">
             <p className="text-muted-foreground mb-4">

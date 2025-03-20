@@ -85,17 +85,18 @@ export const getDefaultOptionsForType = (type: FieldType): FieldOption[] => {
   }
 };
 
+// Mapping of field types to static Lucide icon names
 export const getFieldIcon = (type: FieldType): string => {
   switch (type) {
-    case 'text': return 'type';
-    case 'dropdown': return 'list';
-    case 'radio': return 'circle-dot';
-    case 'file': return 'upload';
-    case 'checkbox': return 'check-square';
-    case 'country': return 'globe';
-    case 'date': return 'calendar';
-    case 'phone': return 'phone';
-    default: return 'square';
+    case 'text': return 'Type';
+    case 'dropdown': return 'List';
+    case 'radio': return 'CircleDot';
+    case 'file': return 'Upload';
+    case 'checkbox': return 'CheckSquare';
+    case 'country': return 'Globe';
+    case 'date': return 'Calendar';
+    case 'phone': return 'Phone';
+    default: return 'Square';
   }
 };
 

@@ -3,7 +3,6 @@ import React from 'react';
 import { FormField } from '../../types/form-builder';
 import BaseField from './BaseField';
 import { useFormBuilder } from '../../contexts/FormBuilderContext';
-import { organizeFieldsHierarchy } from '../../utils/form-utils';
 import FieldRenderer from './FieldRenderer';
 import AddFieldButton from './AddFieldButton';
 import { ChevronDown, ChevronRight } from 'lucide-react';
@@ -14,7 +13,7 @@ interface SectionProps {
 }
 
 const Section: React.FC<SectionProps> = ({ field }) => {
-  const { state } = useFormBuilder();
+  const { state, setActiveField } = useFormBuilder();
   const [isCollapsed, setIsCollapsed] = React.useState(false);
   
   // Get child fields for this section
@@ -25,8 +24,18 @@ const Section: React.FC<SectionProps> = ({ field }) => {
     setIsCollapsed(!isCollapsed);
   };
 
+  // Handle section click to select it
+  const handleSectionClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setActiveField(field.id);
+  };
+
   return (
-    <BaseField field={field} className="bg-card/30">
+    <BaseField 
+      field={field} 
+      className="bg-card/30"
+      onClick={handleSectionClick}
+    >
       <div className="flex items-center mb-4">
         <button 
           className="mr-2 p-1 rounded-md hover:bg-accent"
@@ -38,7 +47,9 @@ const Section: React.FC<SectionProps> = ({ field }) => {
             <ChevronDown className="h-4 w-4" />
           )}
         </button>
-        <h3 className="text-lg font-medium">{field.label}</h3>
+        <h3 className="text-lg font-medium cursor-pointer" onClick={handleSectionClick}>
+          {field.label}
+        </h3>
       </div>
       
       <div className={cn(
